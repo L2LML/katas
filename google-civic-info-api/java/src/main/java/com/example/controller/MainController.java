@@ -2,6 +2,7 @@ package com.example.controller;
 
 import com.example.model.Election;
 import com.example.model.ElectionList;
+import com.example.model.Representative;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,13 +23,25 @@ public class MainController {
     @Value("${api.key}")
     private String apiKey;
 
+    @Value("${api.url}")
+    private String baseUrl;
+
     @GetMapping("/elections")
     public List<Election> getElections() {
         RestTemplate restTemplate = new RestTemplate();
-        String url = "https://www.googleapis.com/civicinfo/v2/elections" + "?key=" + apiKey;
+        String url = baseUrl + "?key=" + apiKey;
         ElectionList response = restTemplate.getForObject(url, ElectionList.class);
         List<Election> electionList = response.getElections();
         return electionList;
+    }
+
+    @GetMapping("/reps")
+    public List<Representative> getReps() {
+        List<Representative> reps = new ArrayList<>();
+
+
+
+        return reps;
     }
 
     @GetMapping("/")
